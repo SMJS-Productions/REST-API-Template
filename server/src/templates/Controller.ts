@@ -22,16 +22,6 @@ export abstract class Controller {
         response.status(status).json({ status, message }).end();
     }
 
-    /**
-     * A method which determines falls under the authorization requirements
-     * @param method The request method used by the endpoint
-     * @param path The url path used by the endpoint
-     * @returns If the endpoint falls under the authorization requirements
-     */
-    public static isAuthorized(method: string, path: string) {
-        return method != "GET" && /^(?:\/)?api\/v[0-9]+\/submission$/.test(path);
-    }
-
     public readonly category: string;
 
     public readonly path: string;
@@ -40,8 +30,6 @@ export abstract class Controller {
 
     public readonly version: number;
 
-    public readonly authorized: boolean;
-    
     public readonly description: string;
     
     public returnBodyDefinition?: DefinitionType;
@@ -75,7 +63,6 @@ export abstract class Controller {
         this.path = `/api/v${version}/${path.startsWith("/") ? path.slice(1) : path}`;
         this.method = RequestMethod[method];
         this.version = version;
-        this.authorized = Controller.isAuthorized(this.method, this.path);
         this.description = description;
 
 
