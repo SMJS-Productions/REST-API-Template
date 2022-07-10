@@ -1,0 +1,9 @@
+{
+  "api": {
+    "version": 1
+  },
+  "web": {
+    "port": 8080,
+    "max_packet_size": "5mb"
+  }
+}

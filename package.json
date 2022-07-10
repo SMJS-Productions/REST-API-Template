@@ -1,0 +1,12 @@
+{
+  "name": "rest-api-template",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "install": "cd ./cmd && npm i && cd ../server && npm i",
+    "postinstall": "tsc -p ./cmd/tsconfig.json && npm run build",
+    "build": "tsc -p ./server/tsconfig.json"
+  },
+  "author": "SMJS",
+  "license": "MIT"
+}

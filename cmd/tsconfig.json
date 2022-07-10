@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./bin/",
+    "module": "UMD",
+    "target": "ES2021"
+  },
+  "include": [
+    "./src/**/*.ts"
+  ]
+}

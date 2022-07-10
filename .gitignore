@@ -1,0 +1,7 @@
+# Unneeded node/ts directories
+*/node_modules/
+cmd/bin/
+server/dist/
+
+# The generated documentations HTML
+docs/static/index.html
