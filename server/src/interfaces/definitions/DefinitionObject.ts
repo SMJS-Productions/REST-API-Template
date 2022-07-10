@@ -1,4 +1,4 @@
-import { DefinitionType } from "../../types/DefinitionType";
+import { DefinitionType } from "../../types/definitions/DefinitionType";
 import { DefinitionInfo } from "./DefinitionInfo";
 
 export interface DefinitionObject {

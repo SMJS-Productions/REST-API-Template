@@ -6,7 +6,7 @@
     "prebuild": "interfacer -p ../settings.json -n Settings > ./src/interfaces/Settings.ts",
     "build": "tsc",
     "prestart": "npm run build",
-    "start": "node dist/index.ts"
+    "start": "node dist/index.js"
   },
   "author": "SMJS",
   "license": "MIT",

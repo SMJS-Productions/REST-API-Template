@@ -3,5 +3,6 @@
 cmd/bin/
 server/dist/
 
-# The generated documentations HTML
+# The generated documentations
 docs/static/index.html
+docs/md/

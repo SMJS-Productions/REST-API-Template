@@ -8,7 +8,7 @@ import { Config } from "./utils/Config";
 import { Docsify } from "./utils/Docsify";
 
 export const APP = express();
-export const SETTINGS = new Config<Settings>(join(__dirname, "../settings.json"));
+export const SETTINGS = new Config<Settings>(join(__dirname, "../../settings.json"));
 export const LISTENER = APP.listen(SETTINGS.get("web").port ?? 8080, () => {
     const controllers: DynamicObject<Controller[]> = {};
     const controllerPath = join(__dirname, "controllers");
@@ -37,7 +37,7 @@ export const LISTENER = APP.listen(SETTINGS.get("web").port ?? 8080, () => {
             }
         }
     }).then(() => {
-        const docsPath = join(__dirname, "../docs");
+        const docsPath = join(__dirname, "../../docs");
         const mdPagesPath = join(docsPath, "/md");
         const staticPath = join(docsPath, "/static");
 
