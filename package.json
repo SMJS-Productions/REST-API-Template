@@ -5,7 +5,8 @@
   "scripts": {
     "install": "cd ./cmd && npm i && cd ../server && npm i",
     "postinstall": "tsc -p ./cmd/tsconfig.json && npm run build",
-    "build": "tsc -p ./server/tsconfig.json"
+    "build": "tsc -p ./server/tsconfig.json",
+    "start": "cd ./server && npm start"
   },
   "author": "SMJS",
   "license": "MIT"
