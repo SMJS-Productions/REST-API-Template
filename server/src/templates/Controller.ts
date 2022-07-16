@@ -4,8 +4,6 @@ import { request } from "../types/request";
 import { response } from "../types/response";
 import { RequestMethod } from "../enums/RequestMethod";
 import { APP, SETTINGS } from "..";
-import { DefinitionType } from "../types/definitions/DefinitionType";
-import { DefinitionObject } from "../interfaces/definitions/DefinitionObject";
 
 /**
  * A template which handles the API controller registration
@@ -30,20 +28,6 @@ export abstract class Controller {
 
     public readonly version: number;
 
-    public readonly description: string;
-    
-    public returnBodyDefinition?: DefinitionType;
-
-    public urlParamsDefinition?: Record<string, string>
-
-    public postBodyDefinition?: DefinitionType;
-    
-    public urlQueryDefinition?: Record<string, string>;
-
-    public headerDefinition?: Record<string, string>;
-
-    public definitions?: DefinitionObject[];
-
     /**
      * Registers a simple API endpoint
      * @param path The url path
@@ -53,7 +37,6 @@ export abstract class Controller {
     constructor(
         path: string,
         method: RequestMethod,
-        description: string,
         version: number = SETTINGS.get("api").version
     ) {
         this.category = /^(?:\/)?(.+?)(?:\/)?(?::|$)/.exec(path)?.[1].replace(/\//g, " ").replace(
@@ -63,8 +46,6 @@ export abstract class Controller {
         this.path = `/api/v${version}/${path.startsWith("/") ? path.slice(1) : path}`;
         this.method = RequestMethod[method];
         this.version = version;
-        this.description = description;
-
 
         // Uses request method as a key for the express instance to register the endpoint under the right method
         APP[<keyof typeof APP >this.method.toLowerCase()](path, (
@@ -87,28 +68,4 @@ export abstract class Controller {
      * @param next The next callback provided by express
      */
     protected abstract request(request: request, response: response, next: next): Promise<void>;
-
-    protected setReturnBodyDefinition(definition: DefinitionType): void {
-        this.returnBodyDefinition = definition;
-    }
-
-    protected setUrlParamsDefinition(definition: Record<string, string>): void {
-        this.urlParamsDefinition = definition;
-    }
-
-    protected setPostBodyDefinition(definition: DefinitionType): void {
-        this.postBodyDefinition = definition;
-    }
-
-    protected setUrlQueryDefinition(definition: Record<string, string>): void {
-        this.urlQueryDefinition = definition;
-    }
-
-    protected setHeaderDefinition(definition: Record<string, string>): void {
-        this.headerDefinition = definition;
-    }
-
-    protected setDefinitions(definitions: DefinitionObject[]): void {
-        this.definitions = definitions;
-    }
 }

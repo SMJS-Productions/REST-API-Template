@@ -1,11 +1,10 @@
 import express from "express";
-import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "fs";
+import { readdirSync, statSync } from "fs";
 import { join } from "path";
 import { BetterArray, DevConsole, DynamicObject, Status } from "std-node";
 import { Conflict } from "./enums/Conflict";
 import { Controller } from "./templates/Controller";
 import { Config } from "./utils/Config";
-import { Docsify } from "./utils/Docsify";
 
 export const APP = express();
 export const SETTINGS = new Config<Settings>(join(__dirname, "../../settings.json"));
@@ -37,27 +36,7 @@ export const LISTENER = APP.listen(SETTINGS.get("web").port ?? 8080, () => {
             }
         }
     }).then(() => {
-        const docsPath = join(__dirname, "../../docs");
-        const mdPagesPath = join(docsPath, "/md");
-        const staticPath = join(docsPath, "/static");
-
-        mkdirSync(mdPagesPath, { recursive: true });
-
-        writeFileSync(
-            join(staticPath, "/index.html"), 
-            readFileSync(join(docsPath, "/templates/index.html"), "utf8").replace(
-                /(?<=<body>)(?=<\/body>)/,
-                Object.entries(controllers).reduce((target, [ category, controllers ]) => {
-                    const md = new Docsify(category, controllers).markdown;
-        
-                    writeFileSync(join(mdPagesPath, `${category.replace(/\s/g, "_").toLowerCase()}.md`), md);
-        
-                    return target += `<div class="page">\n${md}\n</div>`;
-                }, "")
-            )
-        );
-
-        APP.use(express.static(staticPath));
+        APP.use(express.static(join(__dirname, "../../docs", "/static")));
         APP.use((request, response) => {
             DevConsole.warn(
                 "A user requested the unknown page \x1b[31m%s\x1b[0m using the \x1b[31m%s\x1b[0m method", 
