@@ -4,8 +4,9 @@
   "description": "",
   "scripts": {
     "install": "cd ./cmd && npm i && cd ../server && npm i",
-    "postinstall": "tsc -p ./cmd/tsconfig.json && npm run build",
-    "build": "tsc -p ./server/tsconfig.json",
+    "postinstall": "npm run build",
+    "prebuild": "api-template document -s ./structure.json -o ./docs/static -t ./docs/templates/index.html",
+    "build": "cd ./server && npm run build",
     "start": "cd ./server && npm start"
   },
   "author": "SMJS",

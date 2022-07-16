@@ -1,0 +1,10 @@
+{
+  "$schema": "./schemas/api.schema.json",
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/status",
+      "description": "Sends an OK message if the server is up and running"
+    }
+  ]
+}

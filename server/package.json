@@ -4,7 +4,8 @@
   "main": "./dist/index.js",
   "scripts": {
     "prebuild": "interfacer -p ../settings.json -n Settings > ./src/interfaces/Settings.ts",
-    "build": "tsc",
+    "build": "api-template code -s ../structure.json -p ./src",
+    "postbuild": "tsc",
     "prestart": "npm run build",
     "start": "node dist/index.js"
   },

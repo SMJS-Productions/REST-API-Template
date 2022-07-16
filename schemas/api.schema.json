@@ -1,0 +1,282 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+
+  "title": "API-Schema",
+  "description": "A schema to map out the structure of the API",
+
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "pattern": "api\\.schema\\.json$"
+    },
+    "endpoints": {
+      "minItems": 1,
+      "uniqueItems": true,
+      "description": "A list of endpoints used by the API",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/endpoint"
+      }
+    }
+  },
+  "required": [
+    "$schema",
+    "endpoints"
+  ],
+
+  "$defs": {
+    "endpoint": {
+      "additionalProperties": false,
+      "description": "An endpoint definition",
+      "type": "object",
+      "properties": {
+        "method": {
+          "description": "The HTTP method of the endpoint",
+          "type": "string",
+          "enum": [
+            "ALL",
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE",
+            "PATCH",
+            "OPTIONS",
+            "HEAD"
+          ]
+        },
+        "path": {
+          "description": "The URL path of the endpoint using the express.js variable syntax",
+          "type": "string",
+          "pattern": "^\/.+$"
+        },
+        "description": {
+          "description": "A brief description about the endpoint",
+          "type": "string"
+        },
+        "version": {
+          "minimum": 1,
+          "description": "The API version of this endpoint",
+          "type": "integer"
+        },
+        "headers": {
+          "minProperties": 1,
+          "description": "A list of the headers required for the request",
+          "type": "object",
+          "patternProperties": {
+            "^[a-zA-Z][\\w-]+[a-zA-Z0-9]$": {
+              "description": "A brief description about the usage of the header",
+              "type": "string"
+            }
+          }
+        },
+        "url_params": {
+          "minProperties": 1,
+          "description": "A list of the parameters used in the URL",
+          "type": "object",
+          "patternProperties": {
+            "^.+$": {
+              "description": "A brief description about the usage of the parameter",
+              "type": "string"
+            }
+          }
+        },
+        "query_params": {
+          "minProperties": 1,
+          "description": "A list of the parameters used in the URL query",
+          "type": "object",
+          "patternProperties": {
+            "^.+$": {
+              "description": "A brief description about the usage of the parameter",
+              "type": "string"
+            }
+          }
+        },
+        "return_body": {
+          "$ref": "#/$defs/definition",
+          "description": "The structure of the body sent back by the endpoint"
+        },
+        "post_body": {
+          "$ref": "#/$defs/definition",
+          "description": "The structure of the body sent in the POST request"
+        },
+        "definitions": {
+          "minItems": 1,
+          "description": "A list of additional definitions used by the body structures",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/object_definition"
+          }
+        }
+      },
+      "required": [
+        "method",
+        "path",
+        "description"
+      ]
+    },
+
+    "definition": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/array_definition"
+        },
+        {
+          "$ref": "#/$defs/type_definition"
+        },
+        {
+          "$ref": "#/$defs/object_definition"
+        }
+      ]
+    },
+
+    "array_definition": {
+      "uniqueItems": true,
+      "minItems": 2,
+      "description": "A list defining object implementations stored as an array",
+      "type": "array",
+      "items": [
+        {
+          "$ref": "#/$defs/type_definition",
+          "description": "Declaring the type and info about the array definition"
+        }
+      ],
+      "additionalItems": {
+        "$ref": "#/$defs/object_definition",
+        "description": "The structure of the objects stored in the array"
+      }
+    },
+
+    "object_definition": {
+      "minProperties": 2,
+      "additionalProperties": false,
+      "description": "An object defining an object implementation",
+      "type": "object",
+      "properties": {
+        "$info": {
+          "additionalProperties": false,
+          "description": "All info about the object",
+          "type": "object",
+          "properties": {
+            "type": {
+              "description": "The type being implemented",
+              "type": "string",
+              "pattern": "^[a-zA-Z$_][a-zA-Z0-9_]*(?:\\[\\])?$"
+            },
+            "description": {
+              "description": "A brief description about the type implementation",
+              "type": "string"
+            },
+            "partial": {
+              "description": "If the type is a partial type where every field is considered optional",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "type",
+            "description"
+          ]
+        }
+      },
+      "patternProperties": {
+        "^(?::)?[a-zA-Z_][a-zA-Z0-9_]+$": {
+          "$ref": "#/$defs/definition",
+          "description": "The definition of the property"
+        }
+      },
+      "required": [
+        "$info"
+      ]
+    },
+
+    "type_definition": {
+      "additionalProperties": false,
+      "description": "An object defining a type implementation",
+      "type": "object",
+      "properties": {
+        "type": {
+          "minItems": 1,
+          "description": "The type being implemented",
+          "type": [
+            "string",
+            "array"
+          ],
+          "items": {
+            "description": "A list of the types that can be implemented",
+            "type": "string",
+            "pattern": "^[a-zA-Z$_][a-zA-Z0-9_]*(?:\\[\\])?$"
+          },
+          "pattern": "^[a-zA-Z$_][a-zA-Z0-9_]*(?:\\[\\])?$",
+          "examples": [
+            "string",
+            "string[]",
+            "integer",
+            "integer[]",
+            "boolean",
+            "boolean[]",
+            "double",
+            "double[]",
+            "float",
+            "float[]",
+            "long",
+            "long[]",
+            "number",
+            "number[]",
+            "date",
+            "date[]"
+          ]
+        },
+        "description": {
+          "description": "A brief description about the type implementation",
+          "type": "string"
+        },
+        "optional": {
+          "description": "This type can be undefined",
+          "type": "boolean"
+        },
+        "partial": {
+          "description": "If the type is a partial type where every field is considered optional",
+          "type": "boolean"
+        },
+        "enum": {
+          "minProperties": 1,
+          "description": "An object defining an enumeration implementation",
+          "type": "object",
+          "patternProperties": {
+            "^[A-Z][A-Z0-9_]+$": {
+              "$ref": "#/$defs/enum_field"
+            }
+          }
+        }
+      },
+      "required": [
+        "type",
+        "description"
+      ]
+    },
+
+    "enum_field": {
+      "additionalProperties": false,
+      "description": "A field giving information about a field in an enumeration",
+      "type": "object",
+      "properties": {
+        "value": {
+          "description": "The value assigned to the enum field",
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "description": {
+          "description": "A brief description about the usage of the field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "description"
+      ]
+    }
+  }
+}
