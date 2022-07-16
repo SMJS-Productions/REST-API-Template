@@ -3,6 +3,7 @@ import { readdirSync, statSync } from "fs";
 import { join } from "path";
 import { BetterArray, DevConsole, DynamicObject, Status } from "std-node";
 import { Conflict } from "./enums/Conflict";
+import { Settings } from "./interfaces/Settings";
 import { Controller } from "./templates/Controller";
 import { Config } from "./utils/Config";
 

@@ -6,3 +6,6 @@ server/dist/
 # The generated documentations
 docs/static/index.html
 docs/md/
+
+# Other generated files
+server/src/interfaces/Settings.ts

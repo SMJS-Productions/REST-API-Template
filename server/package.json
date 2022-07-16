@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "./dist/index.js",
   "scripts": {
-    "prebuild": "interfacer -p ../settings.json -n Settings > ./src/interfaces/Settings.ts",
+    "prebuild": "mkdir .\\src\\interfaces && interfacer -p ../settings.json -n Settings -e > ./src/interfaces/Settings.ts",
     "build": "api-template code -s ../structure.json -p ./src",
     "postbuild": "tsc",
     "prestart": "npm run build",
