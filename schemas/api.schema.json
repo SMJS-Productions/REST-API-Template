@@ -8,6 +8,7 @@
   "type": "object",
   "properties": {
     "$schema": {
+      "description": "The JSON schema for the API structure",
       "type": "string",
       "pattern": "api\\.schema\\.json$"
     },
@@ -29,7 +30,7 @@
   "$defs": {
     "endpoint": {
       "additionalProperties": false,
-      "description": "An endpoint definition",
+      "description": "An endpoint definition specifying the request format and response format",
       "type": "object",
       "properties": {
         "method": {
@@ -160,16 +161,20 @@
           "type": "object",
           "properties": {
             "type": {
-              "description": "The type being implemented",
+              "description": "The object name being implemented",
               "type": "string",
               "pattern": "^[a-zA-Z$_][\\w]*(?:\\[\\])?$"
             },
             "description": {
-              "description": "A brief description about the type implementation",
+              "description": "A brief description about the object implementation",
               "type": "string"
             },
             "partial": {
-              "description": "If the type is a partial type where every field is considered optional",
+              "description": "If the object is a partial object where every field is considered optional",
+              "type": "boolean"
+            },
+            "optional": {
+              "description": "This object can be undefined",
               "type": "boolean"
             }
           },
