@@ -7,7 +7,7 @@ import yargs from "yargs";
 
 yargs.scriptName("interfacer").command({
     command: "$0",
-    describe: "",
+    describe: "Generates a Typescript interface from a JSON format",
     builder: (yargs) => yargs.option("path", {
         alias: "p",
         describe: "The path to the JSON file to interface",
@@ -45,7 +45,7 @@ yargs.scriptName("interfacer").command({
             }
         }
     })
-}).argv;
+}).help("help").alias("help", "h").argv;
 
 function recursiveTypeParser(data: object): object {
     return Object.fromEntries(Object.entries(data).map(([ key, value ]) => {
