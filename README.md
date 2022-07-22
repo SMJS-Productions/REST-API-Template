@@ -6,7 +6,7 @@ This repository functions as a general REST API standard template written in Typ
 
 This application relies on a lot of automated generation. Thus you'll need to configure some files before you work on the code.
 
-Before doing anything, you'll need to define the structure of the API. You can do this by opening the [structure config file](structure.json) and defining the endpoints using the schema documented in [structuring](#structuring). Once you've define the structure, you can completely prepare the environment by running `npm i`. You compile the application, generate the interface for [the settings](settings.json) and generate any changes in the [structure config file](structure.json) by running `npm run build`. Be aware that the structure generator will only generate the code templates for all the newly added endpoints and the documentations. If you want to run the API, simply run `npm start`.
+Before doing anything, you'll need to define the structure of the API. You can do this by opening the [structure config file](structure.json) and defining the endpoints using the schema documented in [structuring](#structuring). Once you've define the structure, you can completely prepare the environment by running `npm i`. You compile the application and generate the interface for [the settings](settings.json) by running `npm run build`. You can generate a new version of the documentations to load any changes in the [structure config file](structure.json) by running `npm run generate`. Be aware that the structure generator will only generate the code templates for all the newly added endpoints and the documentations. If you want to run the API, simply run `npm start`.
 
 ## Structuring
 
