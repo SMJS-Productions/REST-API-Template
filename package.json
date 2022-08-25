@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
+    "preinstall": "npm i -g mkdirp",
     "install": "cd ./cmd && npm i && cd ../server && npm i",
     "postinstall": "npm run document && npm run build",
     "build": "cd ./server && npm run build",
